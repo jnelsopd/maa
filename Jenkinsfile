@@ -1,31 +1,23 @@
 pipeline {
-    environment {
-        registry = "harishnarang2018/kopal"
-        registryCredential = 'dockerhub'
-        dockerImage = ''
-    }
     agent any
     stages {
-        stage('Building our image') {
+
+           stage('Build') {
             steps {
-                script {
-                    dockerImage = docker.build registry + ":$BUILD_NUMBER"
-                }
-            }
+  sh "aws cloudformation create-stack --stack-name chutanku --template-body file://test --parameters ParameterKey=KeyName,ParameterValue=harishnarang --region 'ap-south-1' --profile 266739837450_MWAwsInfraAdmins "
+                        }
         }
-        stage('Deploy our image') {
+            stage('test') {
             steps {
-                script {
-                    docker.withRegistry( '', registryCredential ) {
-                        dockerImage.push()
-                    }
-                }
+             echo "test"
             }
-        }
-        stage('Cleaning up') {
+}
+
+          stage('package') {
             steps {
-                sh "docker rmi $registry:$BUILD_NUMBER"
+                echo "package"
             }
-        }
+
     }
+}
 }
