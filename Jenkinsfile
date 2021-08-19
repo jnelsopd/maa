@@ -1,24 +1,31 @@
 pipeline {
+    environment {
+        registry = "harishnarang2018/kopal"
+        registryCredential = 'dockerhub'
+        dockerImage = ''
+    }
     agent any
     stages {
-
-           stage('Build') {
+        stage('Building our image') {
             steps {
-             echo "harish"                        }
-
+                script {
+                    dockerImage = docker.build registry + ":$BUILD_NUMBER"
+                }
+            }
         }
-            stage('test') {
+        stage('Deploy our image') {
             steps {
-            echo "maa"
+                script {
+                    docker.withRegistry( '', registryCredential ) {
+                        dockerImage.push()
+                    }
+                }
             }
-}
-
-          stage('package') {
+        }
+        stage('Cleaning up') {
             steps {
-                echo "package"
+                sh "docker rmi $registry:$BUILD_NUMBER"
             }
-
+        }
     }
 }
-}
-
