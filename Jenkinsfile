@@ -7,7 +7,7 @@ pipeline {
         stage('Build') {
             steps {
                sh '''
-            cd terraformtest
+            cd terratest
             terraform init
              terraform plan -var-file="terraform.tfvars"
 
