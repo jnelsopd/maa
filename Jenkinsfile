@@ -1,17 +1,32 @@
-pipeline { 
-    agent any 
+pipeline {
     environment {
-     AWS_PROFILE = "266739837450_MWAwsInfraAdmins"   
-    }    
-    stages { 
-        stage('Build') { 
-            steps { 
-               sh '''
-            aws --version --region ap-south-1 
-            aws ec2 describe-regions --region ap-south-1  
-            aws cloudformation create-stack --stack-name chutanku --template-body file://test  --region ap-south-1
-            '''
+        registry = "harishnarang2018/kopal"
+        registryCredential = 'dockerhub'
+        dockerImage = ''
+    }
+    agent any
+    stages {
+        stage('Building our image') {
+            steps {
+                script {
+                    dockerImage = docker.build registry + ":$BUILD_NUMBER"
+                }
+            }
+        }
+        stage('Deploy our image') {
+            steps {
+                script {
+                    docker.withRegistry( '', registryCredential ) {
+                        dockerImage.push()
+                    }
+                }
+            }
+        }
+        stage('Cleaning up') {
+            steps {
+                sh "docker rmi $registry:$BUILD_NUMBER"
             }
         }
     }
 }
+
