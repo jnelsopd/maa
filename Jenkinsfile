@@ -14,7 +14,6 @@ pipeline {
             '''
             }
         }
-    stages {
         stage('Destroy') {
             steps {
                sh '''
@@ -22,8 +21,7 @@ pipeline {
             terraform destroy -var-file="terraform.tfvars" -auto-approve
             '''
             }
-        }
-     
+           }        
 
 
     }
