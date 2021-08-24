@@ -7,7 +7,10 @@ pipeline {
         stage('Build') {
             steps {
                sh '''
-            ansible-playbook debug.yml
+            cd terraformtest
+            terraform init
+             terraform plan -var-file="terraform.tfvars"
+
             '''
             }
         }
