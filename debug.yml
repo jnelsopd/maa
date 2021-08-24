@@ -1,0 +1,14 @@
+---
+- hosts: localhost
+  gather_facts: False
+  become: true
+  tasks:
+  vars:
+    continents: [Africa, Asia, South America, North America, Europe]
+
+  tasks:
+  - name: Ansible array variables example
+    debug:
+      msg: "{{ item }}"
+    loop:
+      - "{{ continents }}"

@@ -1,30 +1,14 @@
 pipeline {
-    environment {
-        registry = "harishnarang2018/kopal"
-        registryCredential = 'dockerhub'
-        dockerImage = ''
-    }
     agent any
+    environment {
+     AWS_PROFILE = "266739837450_MWAwsInfraAdmins"
+    }
     stages {
-        stage('Building our image') {
+        stage('Build') {
             steps {
-                script {
-                    dockerImage = docker.build registry + ":$BUILD_NUMBER"
-                }
-            }
-        }
-        stage('Deploy our image') {
-            steps {
-                script {
-                    docker.withRegistry( '', registryCredential ) {
-                        dockerImage.push()
-                    }
-                }
-            }
-        }
-        stage('Cleaning up') {
-            steps {
-                sh "docker rmi $registry:$BUILD_NUMBER"
+               sh '''
+            ansible-playbook debug.yml
+            '''
             }
         }
     }
