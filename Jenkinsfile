@@ -1,7 +1,7 @@
 pipeline {
     environment {
         registry = "713433338235.dkr.ecr.ap-south-1.amazonaws.com/matarani"
-        
+
     }
     agent any
     stages {
@@ -15,16 +15,16 @@ pipeline {
         stage('Deploy our image') {
             steps {
                 script {
-                    docker.withRegistry( '', registryCredential ) {
+                sh " aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 713433338235.dkr.ecr.ap-south-1.amazonaws.com"
+                 docker.withRegistry( '',   ) 
+				 
+				 {
                         dockerImage.push()
                     }
+					
+                    }
+
                 }
             }
         }
-        stage('Cleaning up') {
-            steps {
-                sh "docker rmi $registry:$BUILD_NUMBER"
-            }
-        }
-    }
 }
