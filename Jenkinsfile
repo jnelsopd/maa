@@ -1,29 +1,30 @@
 pipeline {
-    agent any
     environment {
-     AWS_PROFILE = "266739837450_MWAwsInfraAdmins"
+        registry = "713433338235.dkr.ecr.ap-south-1.amazonaws.com/matarani"
+        
     }
+    agent any
     stages {
-        stage('Build') {
+        stage('Building our image') {
             steps {
-               sh '''
-            cd terratest
-            terraform init
-            terraform plan -var-file="terraform.tfvars"
-            terraform apply -var-file="terraform.tfvars" -auto-approve
-            '''
+                script {
+                    dockerImage = docker.build registry + ":$BUILD_NUMBER"
+                }
             }
         }
-        stage('Destroy') {
+        stage('Deploy our image') {
             steps {
-               sh '''
-            cd terratest
-            terraform destroy -var-file="terraform.tfvars" -auto-approve
-            '''
+                script {
+                    docker.withRegistry( '', registryCredential ) {
+                        dockerImage.push()
+                    }
+                }
             }
-           }        
-
-
+        }
+        stage('Cleaning up') {
+            steps {
+                sh "docker rmi $registry:$BUILD_NUMBER"
+            }
+        }
     }
 }
-
