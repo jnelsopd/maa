@@ -1,6 +1,6 @@
 pipeline {
     environment {
-        registry = "713433338235.dkr.ecr.ap-south-1.amazonaws.com/matarani"
+        registry = "266739837450.dkr.ecr.ap-south-1.amazonaws.com/harishtest"
 
     }
     agent any
@@ -15,7 +15,7 @@ pipeline {
         stage('Deploy our image') {
             steps {
                 script {
-                sh " aws ecr get-login-password --region ap-south-1 --profile harish | docker login --username AWS --password-stdin 713433338235.dkr.ecr.ap-south-1.amazonaws.com"
+                sh " aws ecr get-login-password --region ap-south-1 --profile 266739837450_MWAwsInfraAdmins | docker login --username AWS --password-stdin 266739837450.dkr.ecr.ap-south-1.amazonaws.com"
                  docker.withRegistry( '',   ) 
 				 
 				 {
