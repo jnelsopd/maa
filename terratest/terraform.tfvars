@@ -1,7 +1,0 @@
-vpc_cidr =  "192.168.0.0/16"
-public_subnet_cidr =  ["192.168.1.0/24", "192.168.2.0/24"]
-private_subnet_cidr = "192.168.2.0/24"
-azs = ["ap-south-1a", "ap-south-1b"]
-aws_access_key_id="ASIAT4GXO5IFHTEAKLFO"
-aws_secret_access_key="KNopzdmKWXrt6P63blVNox0Uor8tK0UAgdC0Z0bA"
-aws_session_token="IQoJb3JpZ2luX2VjEPf//////////wEaCXVzLWVhc3QtMiJHMEUCIQCTU97d3DyVM4SkUCVeTR9VWZyCc4kVZb7EJHQGVVsS6gIgVkX4LTNNJ3+2BFYCrg7jPFdjmdaFXPhOlJJig+p/tSoqnwMIMBABGgwyNjY3Mzk4Mzc0NTAiDP5CNdUghos9i8CW8yr8AgGcMZBKG+GCLWv26YyWX6sp4FwOMVOs+XVLAalKHgvOOHMFNhmasCNNGEdJWZAgT7Y1U1ps/52qlEFr7ckLVCflZl3ufg+BP+19m0AVcaKcek+cLxWihidCrHLGpcgpuk6+zB3qWFbx+fAnSjwrSrxkcjADJtlP14JX2KQBP4qNdgw7yaj0XwhLR+cWURFzt1zeRJSisnhiaikqoLdXBDKhNgcsORG+nUiQm/GtACQi2COT8hN/NMO3NGGW46txtsouAkgbubvnzv4Y2Ad3DqcvBEcHOcEYTzDnLIT5p0QvtaTrWBLo1X8mynwOzuqRfsNUh3F/rbgRtxYfzkn0A0Co8hz7wX2fn22QLePgC4qMgpZNdiD4QJMRm1tr0ES6GteBluXrm0ubcsuyLYRN5gHYHAGzCqzNHqV7qROwMpibufEZV7c4guk1FNSONyegevqzRbYBrcqYhW2U6Hn2RfnVCB4YJK/XmMaMq9ocCurtl2G7JzXS7K8hF6RRMI2NlIkGOqYBqyZnuJJ99JaCivLJeQItCmtcfflecMqe9Bj9L5nhAA6+E175BURgUfcXxOc1RGmfLOnv6Y+jnjHFPH8tkmtx0lNnG1bSiceTfwGRJElvYCZbpi5sh0y6t7jbk+oYwZEEJOa5g+b4xzR/cgvG77wB7A28oJsc+Gjf4l4usOErbh7a4Lb0B/S1XWfqdlONCksaOjRzg+nmD2KKE2X3RGrniCN8TU0Unw=="
