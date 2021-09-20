@@ -28,10 +28,5 @@ pipeline {
       sh 'ssh -o StrictHostKeyChecking=no root@13.232.124.211 "kubectl create -f pod1.yml" '
       sh 'ssh -o StrictHostKeyChecking=no root@13.232.124.211 "kubectl create -f ser.yml" ' 
 }}
-        stage('Cleaning up') {
-            steps {
-                sh '"docker rmi $registry:"nginx:latest" '
-            }
-        }
     }
 }
