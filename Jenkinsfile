@@ -4,7 +4,7 @@ pipeline {
         registryCredential = 'dockerhub'
         dockerImage = ''
     }
-    agent anyi
+    agent any
     stages {
         stage('Building our image') {
             steps {
