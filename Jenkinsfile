@@ -1,15 +1,15 @@
 pipeline {
     environment {
-        registry = "harishnarang2018/kopal"
+        registry = "harishnarang2018"
         registryCredential = 'dockerhub'
         dockerImage = ''
     }
-    agent any
+    agent anyi
     stages {
         stage('Building our image') {
             steps {
                 script {
-                    dockerImage = docker.build registry + ":nginx$BUILD_NUMBER"
+                    dockerImage = docker.build registry + "nginx:latest"
                 }
             }
         }
@@ -22,9 +22,13 @@ pipeline {
                 }
             }
         }
+
+      stage ('RUN pod on cluster') {
+      sh 'ssh -o StrictHostKeyChecking=no root@13.232.124.211 "kubectl create -f pod1.yml" ' 
+}
         stage('Cleaning up') {
             steps {
-                sh "docker rmi $registry:nginx$BUILD_NUMBER"
+                sh "docker rmi $registry:nginx:latest"
             }
         }
     }
