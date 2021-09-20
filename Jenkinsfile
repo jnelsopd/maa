@@ -30,7 +30,7 @@ pipeline {
 }}
         stage('Cleaning up') {
             steps {
-                sh "docker rmi $registry:"nginx:latest"
+                sh '"docker rmi $registry:"nginx:latest" '
             }
         }
     }
