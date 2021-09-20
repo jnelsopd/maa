@@ -1,1 +1,1 @@
-From ubuntu
+From nginx
