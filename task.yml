@@ -1,0 +1,12 @@
+---
+- hosts: localhost
+  gather_facts: no
+
+  tasks:
+  - name: ansible pass multiple varibles in command line
+    debug:
+      msg: "Hi This Is {{ abcd }}"
+
+  - name: pass multiple varibales to playbook
+    debug:
+      msg: "Hi This Is {{ efgh }}"
