@@ -1,11 +1,14 @@
 pipeline {
     agent any
-    stages {
+    environment {
+     AWS_PROFILE = "harish"
+    }
 
+ stages {
            stage('Build') {
             steps {
-         sh ' ansible-playbook task.yml --extra-vars "abcd=harish efgh=harish1" '                        }
-
+  sh "aws cloudformation create-stack --stack-name chutanku --template-body file://test --parameters ParameterKey=KeyName,ParameterValue=harry --region 'ap-south-1' "
+                        }
         }
             stage('test') {
             steps {
@@ -21,4 +24,3 @@ pipeline {
     }
 }
 }
-
