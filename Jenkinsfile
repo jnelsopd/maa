@@ -1,26 +1,33 @@
 pipeline {
-    agent any
-    environment {
-     AWS_PROFILE = "harish"
-    }
 
- stages {
-           stage('Build') {
+  agent any
+
+  stages {
+
+    stage('Checkout Source') {
+      steps {
+        git url: 'https://github.com/harrybhaiya/maa.git', branch :'main'
+     }
+    }
+    
+      stage("Build image") {
             steps {
-  sh "aws cloudformation create-stack --stack-name chutanku --template-body file://test  --region 'ap-south-1' "
-                        }
+                script {
+                    myapp = docker.build("harishnarang2018/hellowhale:${env.BUILD_ID}")
+                }
+            }
         }
-            stage('test') {
+    
+      stage("Push image") {
             steps {
-             echo "test"
+                script {
+                    docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
+                            myapp.push("latest")
+                            myapp.push("${env.BUILD_ID}")
+                    }
+                }
             }
-}
+        }
 
-          stage('package') {
-            steps {
-                echo "package"
-            }
-
-    }
 }
 }
