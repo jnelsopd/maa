@@ -10,7 +10,7 @@ pipeline {
         }
             stage('test') {
             steps {
-	    script { kubernetesDeploy (configs: 'sh harish.sh' , kubeconfigId: 'kubeconfigid') }
+	    script { kubernetesDeploy (configs: 'harish.sh' , kubeconfigId: 'kubeconfigid') }
               
             }
 }
