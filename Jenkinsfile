@@ -7,7 +7,7 @@ pipeline {
  stages {
            stage('Build') {
             steps {
-  sh "aws cloudformation create-stack --stack-name chutanku --template-body file://test --parameters ParameterKey=KeyName,ParameterValue=harry --region 'ap-south-1' "
+  sh "aws cloudformation create-stack --stack-name chutanku --template-body file://test --parameters ParameterKey=KeyName,ParameterValue=harish --region 'ap-south-1' "
                         }
         }
             stage('test') {
