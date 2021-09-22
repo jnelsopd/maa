@@ -1,7 +1,8 @@
 pipeline {
-
-  agent any
-
+    agent any
+    environment {
+     AWS_PROFILE = "266739837450_MWAwsInfraAdmins"
+    }
   stages {
 
     stage('Checkout Source') {
