@@ -3,6 +3,7 @@ pipeline {
      AWS_PROFILE = "266739837450_MWAwsInfraAdmins"
      registry = "266739837450.dkr.ecr.ap-south-1.amazonaws.com/harishtest"
     }
+    agent any
     stages {
         stage('Building our image') {
             steps {
