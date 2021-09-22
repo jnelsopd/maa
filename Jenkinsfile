@@ -37,9 +37,8 @@ pipeline {
        stage('Deploy App') {
       steps {
         script {
-         withKubeConfig ([credentialsId: 'kubeconfigid' ])
           {
-            sh 'kubectl create -f $WORKSPACE/nginx.yaml'
+            sh 'kubectl create -f nginx.yaml'
           }        
 }
       }
