@@ -1,10 +1,8 @@
 pipeline {
     environment {
-     registry = "266739837450.dkr.ecr.ap-south-1.amazonaws.com/harishtest"
+     registry = "public.ecr.aws/f2c6u3p5/kkkkk"
     }
     agent any
-
-  
     stages {
       
     stage('Checkout Source') {
@@ -23,8 +21,8 @@ pipeline {
         stage('Deploy our image') {
             steps {
                 script {
-                sh "aws ecr get-login-password --region ap-south-1 --profile 266739837450_MWAwsInfraAdmins | docker login --username AWS --password-stdin 266739837450.dkr.ecr.ap-south-1.amazonaws.com"
-                 docker.withRegistry( '',   )
+       sh "aws ecr-public get-login-password --region ap-south-1 --profile 266739837450_MWAwsInfraAdmins | docker login --username AWS --password-stdin public.ecr.aws/f2c6u3p5"           
+      docker.withRegistry( '',   )
 
                                  {
                         dockerImage.push()
@@ -34,14 +32,7 @@ pipeline {
 
                 }
             } 
-       stage('Deploy App') {
-      steps {
-        script {
-           kubernetesDeploy(kubeconfigId: "kubeconfigid")
-          {  sh 'kubectl create -f $WORKSPACE/nginx.yaml' }
-}
+
       }
 
         }
-}
-}
