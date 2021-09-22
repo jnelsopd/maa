@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
       - name: hello-whale-container
-        image: 266739837450.dkr.ecr.ap-south-1.amazonaws.com/harishtest:41
+        image: public.ecr.aws/f2c6u3p5/kkkkk:67
         imagePullPolicy: Always
         ports:
         - containerPort: 80
