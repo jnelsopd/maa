@@ -3,7 +3,16 @@ pipeline {
      registry = "266739837450.dkr.ecr.ap-south-1.amazonaws.com/harishtest"
     }
     agent any
+
+  
     stages {
+      
+    stage('Checkout Source') {
+      steps {
+        git url: 'https://github.com/harrybhaiya/maa.git', branch :'main'
+     }
+    }
+
         stage('Building our image') {
             steps {
                 script {
