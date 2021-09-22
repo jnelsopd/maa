@@ -2,24 +2,36 @@ pipeline {
     agent any
     environment {
      AWS_PROFILE = "266739837450_MWAwsInfraAdmins"
+     registry = "266739837450.dkr.ecr.ap-south-1.amazonaws.com/harishtest"
     }
-  stages {
+    stages {
+        stage('Building our image') {
+            steps {
+                script {
+                    dockerImage = docker.build registry + ":$BUILD_NUMBER"
+                }
+            }
+        }
+        stage('Deploy our image') {
+            steps {
+                script {
+                sh "aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 266739837450.dkr.ecr.ap-south-1.amazonaws.com"
+                 docker.withRegistry( '',   )
 
-    stage('Checkout Source') {
-      steps {
-        git url: 'https://github.com/harrybhaiya/maa.git', branch :'main'
-     }
-    }
-    
+                                 {
+                        dockerImage.push()
+                    }
 
-stage('Deploy App') {
+                    }
+
+                }
+            } 
+       stage('Deploy App') {
       steps {
         script {
-          kubernetesDeploy(configs: "nginxser.yaml", kubeconfigId: "awskubeconfigID")
+          kubernetesDeploy(configs: "nginx.yaml", kubeconfigId: "kubeconfigid")
         }
       }
-    }
 
-
-}
+        }
 }
