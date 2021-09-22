@@ -1,5 +1,4 @@
 pipeline {
-    agent any
     environment {
      AWS_PROFILE = "266739837450_MWAwsInfraAdmins"
      registry = "266739837450.dkr.ecr.ap-south-1.amazonaws.com/harishtest"
