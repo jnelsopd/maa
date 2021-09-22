@@ -31,7 +31,15 @@ pipeline {
                     }
 
                 }
-            } 
+            }
+ stage('Deploy App') {
+      steps {
+        script {
+          kubernetesDeploy(configs: "nginxser.yaml", kubeconfigId: "kubeconfigid")
+        }
+      }
+    }
+ 
 
       }
 
