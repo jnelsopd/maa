@@ -37,9 +37,7 @@ pipeline {
        stage('Deploy App') {
       steps {
         script {
-          {
             sh 'kubectl create -f nginx.yaml'
-          }        
 }
       }
 
