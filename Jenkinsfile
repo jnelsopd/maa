@@ -1,21 +1,23 @@
-node {
-stage ('scm checkoutb'){
+pipeline {
+    agent any
+    stages {
 
-git branch: 'main', url: 'https://github.com/harrybhaiya/maa.git'
-
+           stage('Build') {
+            steps {
+  sh "aws cloudformation create-stack --stack-name chutanku --template-body file://test --parameters ParameterKey=KeyName,ParameterValue=harry --region 'ap-south-1' "
+                        }
+        }
+            stage('test') {
+            steps {
+             echo "test"
+            }
 }
 
-stage ('docker build image') {
-    sh 'docker build -t harishnarang2018/ubuntu:1.0.0 .'
-}
+          stage('package') {
+            steps {
+                echo "package"
+            }
 
-stage ('docker push image') {
-   sh 'docker login -u harishnarang2018 -p Erarock1'
-   sh 'docker push harishnarang2018/ubuntu:1.0.0'
     }
-   
-
-stage ('run container on dev') {
-sh 'ssh -o StrictHostKeyChecking=no root@192.168.1.173 "sudo docker run -p 8080:8080 -d --name harish harishnarang2018/ubuntu:1.0.0" '
 }
 }

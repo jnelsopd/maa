@@ -132,14 +132,14 @@ Resources:
         FromPort: 0
         ToPort: 0
         CidrIp: 0.0.0.0/0
-Outputs:
-  VPC:
-    Description: VPC ID
-    Value: !Ref VPC
+##Outputs:
+##  VPC:
+##    Description: VPC ID
+##    Value: !Ref VPC
 #    Export:
 #      Name: harish-kutta
-  Subnetharish:
-    Description: The subnet ID to use for public web servers
-    Value: !Ref Subnet01
+##  Subnetharish:
+##    Description: The subnet ID to use for public web servers
+##    Value: !Ref Subnet01
 #    Export:
 #      Name: harish-kutta-subnet
