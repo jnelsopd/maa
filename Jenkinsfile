@@ -1,16 +1,26 @@
 pipeline {
     agent any
+
     stages {
-        stage('Build') {
+
+           stage('Build') {
             steps {
-               sh '''
-            cd terraform
-            terraform init
-             terraform plan 
-            terraform apply  -auto-approve
-            '''
+              git url: 'https://github.com/harrybhaiya/maa.git', branch :'main'
             }
         }
+            stage('test') {
+            steps {
+            script { kubernetesDeploy (configs: 'nginx.yaml' , kubeconfigId: 'kubeconfigid') }
+
+            }
+}
+
+          stage('package') {
+            steps {
+                echo "package"
+            }
+
     }
+}
 }
 
