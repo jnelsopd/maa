@@ -1,16 +1,11 @@
 pipeline {
     environment {
-     registry = "public.ecr.aws/f2c6u3p5/kkkkk"
+        registry = "harishnarang2018/kopal"
+        registryCredential = 'dockerhub'
+        dockerImage = ''
     }
     agent any
     stages {
-      
-    stage('Checkout Source') {
-      steps {
-        git url: 'https://github.com/harrybhaiya/maa.git', branch :'main'
-     }
-    }
-
         stage('Building our image') {
             steps {
                 script {
@@ -21,26 +16,16 @@ pipeline {
         stage('Deploy our image') {
             steps {
                 script {
-       sh "aws ecr-public get-login-password --region us-east-1 --profile 266739837450_MWAwsInfraAdmins | docker login --username AWS --password-stdin public.ecr.aws/f2c6u3p5"           
-      docker.withRegistry( '',   )
-
-                                 {
+                    docker.withRegistry( '', registryCredential ) {
                         dockerImage.push()
                     }
-
-                    }
-
                 }
             }
- stage('Deploy App') {
-      steps {
-        script {
-          kubernetesDeploy(configs: "nginxser.yaml", kubeconfigId: "kubeconfigid")
         }
-      }
+        stage('Cleaning up') {
+            steps {
+                sh "docker rmi $registry:$BUILD_NUMBER"
+            }
+        }
     }
- 
-
-      }
-
-        }
+}
