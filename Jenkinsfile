@@ -10,7 +10,7 @@ pipeline {
         }
             stage('build') {
             steps {
-            dir('/varlib/jenkins/hello-world') {
+            dir('/var/lib/jenkins/hello-world') {
                 sh 'mvn clean install'
 
             }
