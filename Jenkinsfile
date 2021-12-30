@@ -13,10 +13,6 @@ pipeline {
             dir('/root/hello-world') {
                 sh 'mvn clean install'
 
-                def pom = readMavenPom file:'pom.xml'
-
-                print pom.version
-                env.version = pom.version
             }
              sh "mv /root/hello-world/webapp/target/*.war /root/hello-world/webapp/target/sample.war"
              sh 'scp /root/hello-world/webapp/target/sample.war StrictHostKeyChecking=no root@192.168.1.173:/root/docker1'
