@@ -10,7 +10,7 @@ pipeline {
         }
             stage('build') {
             steps {
-            dir('/root/hello-world') {
+            dir('/opt/hello-world') {
                 sh 'mvn clean install'
 
             }
