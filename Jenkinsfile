@@ -10,7 +10,7 @@ pipeline {
         }
             stage('build') {
             steps {
-              { withMaven(maven: 'maven2')
+              withMaven(maven: 'maven2'){
                 sh 'mvn clean install'}
                 sh " mv webapp/target/*.war webapp/target/sample.war"
              sh 'scp -o StrictHostKeyChecking=no webapp/target/sample.war  root@192.168.1.173:/root/docker1'
