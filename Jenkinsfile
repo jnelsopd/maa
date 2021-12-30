@@ -1,15 +1,20 @@
 pipeline {
     agent any
+  { 
+    maven "maven2"
+     }
+
     stages {
 
-           stage('Build') {
+           stage('checkout') {
             steps {
-  sh "aws cloudformation create-stack --stack-name $name --template-body file://test --region 'ap-south-1' "
-                        }
+              git url: 'https://github.com/ravdy/hello-world.git', branch :'main'
+            }
         }
-            stage('test') {
+            stage('build') {
             steps {
-             echo "test"
+                sh 'mvn clean install'
+
             }
 }
 
@@ -21,3 +26,4 @@ pipeline {
     }
 }
 }
+
