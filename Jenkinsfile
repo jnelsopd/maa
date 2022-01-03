@@ -1,29 +1,23 @@
 pipeline {
-    agent {
-        docker {
-            image 'maven:3-alpine' 
-            args '-v /root/.m2:/root/.m2' 
-        }
-    }
+    agent any
     stages {
-        stage('Build') { 
+
+           stage('Build') {
             steps {
-                sh 'mvn -B -DskipTests clean package' 
-            }
-        }        stage('Test') {
-            steps {
-                sh 'mvn test'
-            }
-            post {
-                always {
-                    junit 'target/surefire-reports/*.xml'
-                }
-            }
+            sh ' ansible-playbook task.yml --extra-vars "abcd=harish efgh=harish1" '                        }
+
         }
-        stage('Deliver') {
+            stage('test') {
             steps {
-                sh './jenkins/scripts/deliver.sh'
+             echo "test"
             }
-        }
+}
+
+          stage('package') {
+            steps {
+                echo "package"
+            }
+
     }
+}
 }
