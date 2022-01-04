@@ -23,7 +23,9 @@ pipeline {
             steps {
                 withSonarQubeEnv(credentialsId: 'sonarqubeid',installationName: 'sonarqube-jenkins') {
                  sh "${SCANNER_HOME}/bin/sonar-scanner"
-                 sh 'mvn sonar:sonar'
+                  withMaven(maven: 'maven2'){
+
+                 sh 'mvn sonar:sonar'}
     
 }
             }
