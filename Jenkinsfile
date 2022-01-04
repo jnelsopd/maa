@@ -17,10 +17,12 @@ pipeline {
 }
 
           stage('code quality') {
-          def scannerhome = tool 'sonarqube-1';
+           environment {
+           SCANNER_HOME = tool 'sonarqube-1'
+    }
             steps {
                 withSonarQubeEnv(credentialsId: 'sonarqubeid') {
-                 sh "${scannerhome}/bin/sonar-scanner"
+                 sh "${SCANNER_HOME}/bin/sonar-scanner"
                  sh 'maven sonar:sonar'
     
 }
