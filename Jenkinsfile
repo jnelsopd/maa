@@ -10,13 +10,13 @@ pipeline {
         }
             stage('test') {
             steps {
-             sh ' kubectl get nodes -o wide '
+             sh ' kubectl create -f nginxser.yaml '
             }
 }
 
-          stage('package') {
+          stage('get pods') {
             steps {
-                echo "package"
+                sh ' kubectl get pods  '
             }
 
     }
