@@ -2,15 +2,14 @@ pipeline {
     agent any
     stages {
 
-
-           stage('kubernetescheck') {
+           stage('Build') {
             steps {
-            sh 'aws eks --region ap-south-1 update-kubeconfig --name EKS --profile 266739837450_MWAwsInfraAdmins'                        }
+            sh ' ansible-playbook task.yml --extra-vars "abcd=harish efgh=harish1" '                        }
 
         }
             stage('test') {
             steps {
-             sh ' kubectl get nodes -o wide '
+             echo "test"
             }
 }
 
