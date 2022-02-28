@@ -1,37 +1,23 @@
 pipeline {
     agent any
-
     stages {
 
-           stage('checkout') {
+           stage('Build') {
             steps {
-              git url: 'https://github.com/ravdy/hello-world.git', branch :'master'
-            }
+            echo "build" }
         }
-            stage('build') {
+            stage('test') {
             steps {
-              withMaven(maven: 'maven2'){
-                sh 'mvn clean install'}
-
+             echo "test"
             }
-}
 
-          stage('code quality') {
-           environment {
-           SCANNER_HOME = tool 'sonarqube-1'
-    }
+           }
+          stage('package') {
             steps {
-                withSonarQubeEnv(credentialsId: 'sonarqubeid',installationName: 'sonarqube-jenkins') {
-                 sh "${SCANNER_HOME}/bin/sonar-scanner"
-                  withMaven(maven: 'maven2'){
-
-                 sh 'mvn sonar:sonar'}
-    
-}
+                echo "package"
             }
 
     }
 }
 }
-
 
