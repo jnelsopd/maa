@@ -1,22 +1,43 @@
-node {
-stage ('scm checkoutb')
-{
+pipeline {
 
-git branch: 'main', url: 'https://github.com/harrybhaiya/maa.git'
+  agent any
 
-}
+  stages {
 
-stage ('docker build image') {
-    sh 'docker build -t harishnarang2018/ubuntu:1.0.0 .'
-}
+    stage('Checkout Source') {
+      steps {
+        git url:'https://github.com/vamsijakkula/hellowhale.git', branch:'master'
+      }
+    }
+    
+      stage("Build image") {
+            steps {
+                script {
+                    myapp = docker.build("harishnarang2018/hellowhale:${env.BUILD_ID}")
+                }
+            }
+        }
+    
+      stage("Push image") {
+            steps {
+                script {
+                    docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
+                            myapp.push("latest")
+                            myapp.push("${env.BUILD_ID}")
+                    }
+                }
+            }
+        }
 
-stage ('docker push image') {
-   sh 'docker login -u harishnarang2018 -p Erarock1'
-   sh 'docker push harishnarang2018/ubuntu:1.0.0'
+    
+    stage('Deploy App') {
+      steps {
+        script {
+          kubernetesDeploy(configs: "hellowhale.yml", kubeconfigId: "KUBECONFIGAWS")
+        }
+      }
     }
 
+  }
 
-stage ('run container on dev') {
-sh 'ssh -o StrictHostKeyChecking=no root@192.168.1.172 "sudo docker run -p 80:80 -d --name harish harishnarang2018/ubuntu:1.0.0" '
-}
 }
