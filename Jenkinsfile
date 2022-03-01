@@ -4,12 +4,12 @@ pipeline {
 
            stage('Build') {
             steps {
-         sh ' ansible-playbook task.yml --extra-vars "abcd=harish efgh=harish1" '                        }
+         sh ' kubectl create -f nginx.yaml '                        }
 
         }
             stage('test') {
             steps {
-             echo "test"
+           sh ' kubectl get pods '
             }
 }
 
