@@ -2,22 +2,22 @@ pipeline {
     agent any
     stages {
 
-           stage('Build') {
-            steps {
-         sh ' kubectl create -f nginx.yaml '                        }
 
+         stage('CHECKOUT') {
+            steps {
+              git url: 'https://github.com/harrybhaiya/maa.git', branch :'main'
+            }
         }
-            stage('test') {
-            steps {
-           sh ' kubectl get pods '
-            }
-}
 
-          stage('package') {
-            steps {
-                echo "package"
-            }
+   stage('Deploy App') {
+      steps {
+        script {
+          kubernetesDeploy(configs: "nginx.yaml", kubeconfigId: "KUBECONFIGAWS")
+        }
+      }
+    }
+
+
+}
 
     }
-}
-}
