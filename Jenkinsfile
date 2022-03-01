@@ -1,43 +1,36 @@
 pipeline {
-
-  agent any
-
-  stages {
-
-    stage('Checkout Source') {
-      steps {
-        git url:'https://github.com/vamsijakkula/hellowhale.git', branch:'master'
-      }
+    agent any
+    environment{
+        DOCKER_TAG = getDockerTag()
     }
-    
-      stage("Build image") {
-            steps {
-                script {
-                    myapp = docker.build("harishnarang2018/hellowhale:${env.BUILD_ID}")
+    stages{
+        stage('Build Docker Image'){
+            steps{
+                sh "docker build . -t harishnarang2018/hellowhale:${DOCKER_TAG} "
+            }
+        }
+        stage('DockerHub Push'){
+            steps{
+                withCredentials([string(credentialsId: 'dockerhub', variable: 'dockerHubPwd')]) {
+                    sh "docker login -u kammana -p ${dockerHubPwd}"
+                    sh "docker push harishnarang2018/hellowhale:${DOCKER_TAG}"
                 }
             }
         }
-    
-      stage("Push image") {
-            steps {
-                script {
-                    docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
-                            myapp.push("latest")
-                            myapp.push("${env.BUILD_ID}")
-                    }
-                }
+        stage('Deploy to DevServer'){
+            steps{
+                sshagent (credentials: ['dev-server']) {
+				    script{
+						def runCmd = "docker run -d -p 8080:8080 --name=nodeapp harishnarang2018/hellowhale:${DOCKER_TAG}"
+						sh "ssh -o StrictHostKeyChecking=no root@192.168.1.172 ${runCmd}"
+					}
+				}
             }
         }
-
-    
-    stage('Deploy App') {
-      steps {
-        script {
-          kubernetesDeploy(configs: "hellowhale.yml", kubeconfigId: "KUBECONFIGAWS")
-        }
-      }
     }
+}
 
-  }
-
+def getDockerTag(){
+    def tag  = sh script: 'git rev-parse HEAD', returnStdout: true
+    return tag
 }
