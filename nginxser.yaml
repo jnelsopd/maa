@@ -33,7 +33,7 @@ spec:
   selector:
     app: hello-whale-app
     version: blue
-  type: LoadBalancer
+  type: NodePort
   ports:
 #  - nodePort: 31113
     - port: 80
