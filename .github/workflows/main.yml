@@ -4,5 +4,5 @@ jobs:
   init:
     runs-on: self-hosted
     steps:
-      - run: echo "harish"
+      - run: ls
       - run: echo "$HOSTNAME"
