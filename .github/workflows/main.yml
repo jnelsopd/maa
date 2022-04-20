@@ -1,0 +1,8 @@
+name: CI
+on: push
+jobs:
+  init:
+    runs-on: self-hosted
+    steps:
+      - run: echo "harish"
+      - run: echo "$HOSTNAME"
